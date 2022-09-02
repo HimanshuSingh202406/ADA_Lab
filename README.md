@@ -1,2 +1,2 @@
 # ADA_Lab
-This repository is for ADA lab programs.
+This repository is for Python lab programs.
