@@ -1,34 +1,88 @@
-# Lab 4 :
-# WAP to represent Graph using Adjaceny Matrix
-# Adjacency Matrix representation in Python
+# def AdjacencyMatrix(nd):
+#     ad_Mtx = [[0 for i in range(nd)] for j in range(nd)]
 
-class Graph:
-    def __init__(self,size) -> None:
-        self.Nodesize = size # to track number of the nodes
-        # create and initialize matrix with 0 initially
-        self.adjMatrix = [[0]*size for i in range(size)] 
-    
-    def printmatrix(self):
-        '''returns the adjacency matrix''' 
-        print(self.adjMatrix)
-    
-    def add_edge(self,edg):
-        '''a method that adds the edges to make a graph'''
-        edg = list(edg.split(','))
-        edg = [int(i) for i in edg]
-        if edg[0] == edg[1] :
-            print(f"Same vertex {edg[0]} and {edg[1]}")
-        
-        
-        self.adjMatrix[edg[0]][edg[1]] = 1  
-        self.adjMatrix[edg[1]][edg[0]] = 1 
-    
-# driver code                 
-no_of_vertices = int(input("Enter no. of vertices or nodes : "))
+#     for i in range(nd):
+#         u, v, w = map(int, input("Enter the vertices and weight: ").split(','))
 
-g = Graph(no_of_vertices)                                           
-for i in range(no_of_vertices):
-    edge = input(f"Enter edge {i} : ")   
-    g.add_edge(edge)
+#         ad_Mtx[u][v] = w
+#         ad_Mtx[v][u] = w
     
-g.printmatrix()
+#     return ad_Mtx
+
+
+# node = int(input("Enter the number of vertices: "))
+# print(AdjacencyMatrix(node))
+
+# Add the vertex to the set of vertices and the graph
+
+def add_vertices(v):
+    global graph
+    global vertices_no
+    global vertices
+
+    if v in vertices:
+        print("Vertex", v, "alredy exists")
+    else:
+        vertices_no = vertices_no + 1
+        vertices.append(v)
+        if vertices_no > 1:
+            for vertex in graph:
+                vertex.append(0)
+        matrix=[]
+        for i in range (vertices_no):
+            matrix.append(0)
+        graph.append(matrix)
+
+# Add an edge betweeen vertex v1 vertex v2 with edge weight W
+def add_edge(v1,v2,W):
+    global graph
+    global vertices_no
+    global vertices
+
+    # Check if vertex v1 is a valid vertex
+    if v1 not in vertices:
+        print("Vertex", v1, "does not exist.")
+    # Check if vertex v2 is a valid vertex
+    elif v2 not in vertices:
+        print("Vertex", v2, "does not exist.")
+    else:
+        index1 = vertices.index(v1)
+        index2 = vertices.index(v2)
+        graph[index1][index2] = W
+
+
+#Print the graph
+def Print_Graph():
+    global graph
+    global vertices_no
+    for i in range(vertices_no):
+        for j in range(vertices_no):
+            if graph[i][j] != 0:
+                print(vertices[i], "->", vertices[j], "edge weight:", graph[i][j])
+
+# Store the  vertices of graph
+vertices = []
+# Store the number of vertiices in the graph
+vertices_no = 0
+graph = []
+# Add the vertices to the graph
+add_vertices("A")
+add_vertices("B")
+add_vertices("C")
+add_vertices("D")
+add_vertices("E")
+
+# Add  the edges between the vertices by specifying 
+# the from and to vertex along with  the edge weights.
+add_edge('A','B','4')
+add_edge('E','C','3')
+add_edge('C','A','5')
+add_edge('D','C','2')
+add_edge('B','D','1')
+add_edge('E','A','6')
+add_edge('A','E','9')
+add_edge('C','b','7')
+add_edge('B','D','8')
+
+Print_Graph()
+print("Internal Representation : ", graph)
